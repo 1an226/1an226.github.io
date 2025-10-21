@@ -1,6 +1,7 @@
 title: "Paul Kiama - Creative Freelancer"
 description: "Portfolio showcasing work across multiple genres"
 baseurl: ""
+url: "https://lan226.github.io"
 
 collections:
   genres:
