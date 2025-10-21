@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>{{ site.title }}</title>
+</head>
+<body>
+    <nav>
+        <a href="/">Home</a>
+        <a href="/about">About</a>
+        {% for genre in site.genres %}
+            <a href="{{ genre.url }}">{{ genre.name }}</a>
+        {% endfor %}
+    </nav>
+    
+    <main>
+        {{ content }}
+    </main>
+</body>
+</html>
