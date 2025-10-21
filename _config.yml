@@ -1,2 +1,19 @@
-title: "Ian Killio - Creative Freelancer"
-description: "My portfolio site"
+title: "Paul Kiama - Creative Freelancer"
+description: "Portfolio showcasing work across multiple genres"
+baseurl: ""
+url: "https://lan226.github.io"
+
+collections:
+  genres:
+    output: true
+    permalink: /genres/:path/
+
+defaults:
+  - scope:
+      path: "projects"
+    values:
+      layout: "project"
+  - scope:
+      path: "_genres"
+    values:
+      layout: "genre"
