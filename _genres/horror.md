@@ -1,4 +1,4 @@
 ---
-name: "Test Genre"
-description: "Testing folder creation"
+name: "Tech and AI"
+description: "Into the race of AI domination"
 ---
