@@ -1,19 +1,38 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>{{ site.title }}</title>
+    <link rel="stylesheet" href="{{ '/assets/css/style.css' | relative_url }}">
 </head>
 <body>
-    <nav>
-        <a href="/">Home</a>
-        <a href="/about">About</a>
-        {% for genre in site.genres %}
-            <a href="{{ genre.url }}">{{ genre.name }}</a>
-        {% endfor %}
+    <nav class="navbar">
+        <div class="nav-container">
+            <a href="{{ '/' | relative_url }}" class="nav-logo">lan Killio</a>
+            <div class="nav-menu">
+                <a href="{{ '/' | relative_url }}" class="nav-link">Home</a>
+                <a href="{{ '/about' | relative_url }}" class="nav-link">About</a>
+                <div class="dropdown">
+                    <button class="dropbtn">Genres ▾</button>
+                    <div class="dropdown-content">
+                        {% for genre in site.genres %}
+                        <a href="{{ genre.url | relative_url }}">{{ genre.name }}</a>
+                        {% endfor %}
+                    </div>
+                </div>
+            </div>
+        </div>
     </nav>
-    
-    <main>
+
+    <main class="main-content">
         {{ content }}
     </main>
+
+    <footer class="footer">
+        <p>&copy; 2024 lan Killio. All rights reserved.</p>
+    </footer>
+
+    <script src="{{ '/assets/js/script.js' | relative_url }}"></script>
 </body>
 </html>
