@@ -22,6 +22,6 @@ This series provides cutting-edge analysis intothe longest political detainee wi
 
 ## Impact
 
-The series became a reference point for political discussions and was cited by major news outlets for its unique insights into voter behavior.
+Democracy struggles are left an orphan,dreams shattered but again,goals reshaped and ambitions as a nation.
 
 [View Full Series →](#)
