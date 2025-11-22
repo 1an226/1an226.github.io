@@ -1,0 +1,22 @@
+backend:
+  name: github
+  repo: 1an226/1an226.github.io
+  branch: main
+
+media_folder: "assets/images/uploads"
+public_folder: "/assets/images/uploads"
+
+collections:
+  - name: "genre_posts"
+    label: "Blog Posts by Genre"
+    folder: "_genres"
+    create: true
+    slug: "{{slug}}"
+    fields:
+      - {label: "Genre", name: "genre", widget: "select", 
+         options: ["cyberpunk", "horror", "modern-warfare", "philosophy", "politics", "talk-of-town"]}
+      - {label: "Title", name: "title", widget: "string"}
+      - {label: "Description", name: "description", widget: "text", required: false}
+      - {label: "Publish Date", name: "date", widget: "datetime", format: "YYYY-MM-DD"}
+      - {label: "Featured Image", name: "image", widget: "image", required: false}
+      - {label: "Narrative Content", name: "body", widget: "markdown"}
