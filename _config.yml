@@ -1,19 +1,35 @@
-title: "Paul Kiama - Creative Freelancer"
-description: "Portfolio showcasing work across multiple genres"
-baseurl: ""
-url: "https://lan226.github.io"
-
+# Add to your existing _config.yml
 collections:
-  genres:
+  cyberpunk:
     output: true
-    permalink: /genres/:path/
+    permalink: /cyberpunk/:slug
+  horror:
+    output: true
+    permalink: /horror/:slug
+  modern_warfare:
+    output: true
+    permalink: /modern-warfare/:slug
+  philosophy:
+    output: true
+    permalink: /philosophy/:slug
+  politics:
+    output: true
+    permalink: /politics/:slug
+  talk_of_town:
+    output: true
+    permalink: /talk-of-town/:slug
 
 defaults:
   - scope:
-      path: "projects"
+      path: ""
+      type: "cyberpunk"
     values:
-      layout: "project"
+      layout: "post"
+      genre: "cyberpunk"
   - scope:
-      path: "_genres"
+      path: ""
+      type: "horror"
     values:
-      layout: "genre"
+      layout: "post"
+      genre: "horror"
+  # Repeat for all genres...
