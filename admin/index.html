@@ -3,12 +3,41 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Blog CMS</title>
+  <title>Paul's Blog CMS</title>
   <script src="https://unpkg.com/decap-cms@^3.0.0/dist/decap-cms.js"></script>
 </head>
 <body>
   <script>
-    DecapCMS.init();
+    DecapCMS.init({
+      config: {
+        backend: {
+          name: "github",
+          repo: "1an226/1an226.github.io",
+          branch: "main",
+          auth_type: "implicit",
+          site_domain: "1an226.github.io"
+        },
+        media_folder: "assets/images/uploads",
+        public_folder: "/assets/images/uploads",
+        collections: [
+          {
+            name: "posts",
+            label: "Blog Posts",
+            folder: "_posts",
+            create: true,
+            slug: "{{year}}-{{month}}-{{day}}-{{slug}}",
+            fields: [
+              {label: "Title", name: "title", widget: "string"},
+              {label: "Genre", name: "genre", widget: "select", 
+               options: ["cyberpunk", "horror", "modern-warfare", "philosophy", "politics", "talk-of-town"]},
+              {label: "Publish Date", name: "date", widget: "datetime"},
+              {label: "Featured Image", name: "image", widget: "image", required: false},
+              {label: "Content", name: "body", widget: "markdown"}
+            ]
+          }
+        ]
+      }
+    });
   </script>
 </body>
 </html>
