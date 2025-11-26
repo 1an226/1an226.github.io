@@ -1,47 +1,70 @@
-setTimeout(function() {
-      if (typeof DecapCMS === 'undefined') {
-        document.getElementById('status').innerHTML = 
-          'CMS script blocked. Trying self-hosted version...';
-        
-        // Load from your own assets
-        var script = document.createElement('script');
-        script.src = '/assets/js/decap-cms.js';
-        document.head.appendChild(script);
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Paul's Blog CMS</title>
+  
+  <!-- Use self-hosted Decap CMS -->
+  <script src="/assets/js/decap-cms.js"></script>
+</head>
+<body>
+  <div id="status" style="padding: 20px; font-family: Arial;">
+    Loading Paul's Blog CMS...
+  </div>
+  
+  <script>
+    function initializeCMS() {
+      if (typeof DecapCMS !== 'undefined') {
+        try {
+          DecapCMS.init({
+            config: {
+              backend: {
+                name: "github",
+                repo: "1an226/1an226.github.io",
+                branch: "main",
+                auth_type: "implicit",
+                site_domain: "1an226.github.io"
+              },
+              media_folder: "assets/images/uploads",
+              public_folder: "/assets/images/uploads",
+              collections: [
+                {
+                  name: "posts",
+                  label: "Blog Posts",
+                  folder: "_posts",
+                  create: true,
+                  slug: "{{year}}-{{month}}-{{day}}-{{slug}}",
+                  fields: [
+                    {label: "Title", name: "title", widget: "string"},
+                    {label: "Genre", name: "genre", widget: "select", 
+                     options: ["cyberpunk", "horror", "modern-warfare", "philosophy", "politics", "talk-of-town"]},
+                    {label: "Publish Date", name: "date", widget: "datetime"},
+                    {label: "Featured Image", name: "image", widget: "image", required: false},
+                    {label: "Content", name: "body", widget: "markdown"}
+                  ]
+                }
+              ]
+            }
+          });
+          document.getElementById('status').style.display = 'none';
+        } catch (error) {
+          document.getElementById('status').innerHTML = 
+            'Configuration Error: ' + error.message;
+        }
       } else {
-        // Initialize if script loaded
-        DecapCMS.init({
-          config: {
-            backend: {
-              name: "github",
-              repo: "1an226/1an226.github.io",
-              branch: "main",
-              auth_type: "implicit",
-              site_domain: "1an226.github.io"
-            },
-            media_folder: "assets/images/uploads",
-            public_folder: "/assets/images/uploads",
-            collections: [
-              {
-                name: "posts",
-                label: "Blog Posts",
-                folder: "_posts",
-                create: true,
-                slug: "{{year}}-{{month}}-{{day}}-{{slug}}",
-                fields: [
-                  {label: "Title", name: "title", widget: "string"},
-                  {label: "Genre", name: "genre", widget: "select", 
-                   options: ["cyberpunk", "horror", "modern-warfare", "philosophy", "politics", "talk-of-town"]},
-                  {label: "Publish Date", name: "date", widget: "datetime"},
-                  {label: "Featured Image", name: "image", widget: "image", required: false},
-                  {label: "Content", name: "body", widget: "markdown"}
-                ]
-              }
-            ]
-          }
-        });
-        document.getElementById('status').style.display = 'none';
+        document.getElementById('status').innerHTML = 
+          'Error: CMS script failed to load even from self-hosted version. ' +
+          'Please check the file path: /assets/js/decap-cms.js';
       }
-    }, 2000);
+    }
+    
+    // Wait for script to load
+    if (document.readyState === 'loading') {
+      document.addEventListener('DOMContentLoaded', initializeCMS);
+    } else {
+      initializeCMS();
+    }
   </script>
 </body>
 </html>
