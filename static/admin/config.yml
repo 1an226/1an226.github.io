@@ -1,22 +1,35 @@
+# static/admin/config.yml - Decap CMS Configuration
+# This only controls the EDITOR INTERFACE
+
 backend:
   name: github
-  repo: 1an226/1an226.github.io
+  repo: 1an226/1an226.github.io  # Your repository
   branch: main
 
-media_folder: "assets/images/uploads"
+media_folder: "assets/images/uploads"  # Where uploaded images go
 public_folder: "/assets/images/uploads"
 
 collections:
-  - name: "genre_posts"
-    label: "Blog Posts by Genre"
+  # Collection for your existing genre descriptions
+  - name: "genres"
+    label: "Genre Descriptions"
     folder: "_genres"
-    create: true
-    slug: "{{slug}}"
+    create: false  # Don't create new genres via CMS
     fields:
+      - {label: "Name", name: "name", widget: "string"}
+      - {label: "Description", name: "description", widget: "text"}
+      - {label: "Body Content", name: "body", widget: "markdown"}
+
+  # NEW: Collection for creating narrative posts
+  - name: "posts"
+    label: "Blog Posts"
+    folder: "_posts"
+    create: true  # Allow creating new posts
+    slug: "{{year}}-{{month}}-{{day}}-{{slug}}"
+    fields:
+      - {label: "Title", name: "title", widget: "string"}
       - {label: "Genre", name: "genre", widget: "select", 
          options: ["cyberpunk", "horror", "modern-warfare", "philosophy", "politics", "talk-of-town"]}
-      - {label: "Title", name: "title", widget: "string"}
-      - {label: "Description", name: "description", widget: "text", required: false}
-      - {label: "Publish Date", name: "date", widget: "datetime", format: "YYYY-MM-DD"}
+      - {label: "Publish Date", name: "date", widget: "datetime"}
       - {label: "Featured Image", name: "image", widget: "image", required: false}
-      - {label: "Narrative Content", name: "body", widget: "markdown"}
+      - {label: "Content", name: "body", widget: "markdown"}
