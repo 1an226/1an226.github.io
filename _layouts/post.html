@@ -1,0 +1,42 @@
+---
+layout: default
+---
+
+<article class="post-page">
+  <!-- Post Header -->
+  <header class="post-header">
+    <nav class="post-breadcrumb">
+      <a href="{{ '/genres/' | relative_url }}">Genres</a> → 
+      <a href="{{ site.baseurl }}/genres/{{ page.genre }}/">{{ page.genre | capitalize }}</a>
+    </nav>
+    
+    <h1 class="post-title">{{ page.title }}</h1>
+    
+    <div class="post-meta">
+      <time class="post-date" datetime="{{ page.date | date_to_xmlschema }}">
+        {{ page.date | date: "%B %d, %Y" }}
+      </time>
+      <span class="post-genre">in {{ page.genre | capitalize }}</span>
+    </div>
+
+    {% if page.image %}
+      <div class="post-featured-image">
+        <img src="{{ page.image | relative_url }}" alt="{{ page.title }}">
+      </div>
+    {% endif %}
+  </header>
+
+  <!-- Post Content -->
+  <div class="post-content">
+    {{ content }}
+  </div>
+
+  <!-- Post Footer -->
+  <footer class="post-footer">
+    <div class="post-navigation">
+      <a href="{{ site.baseurl }}/genres/{{ page.genre }}/" class="back-to-genre">
+        ← Back to {{ page.genre | capitalize }} narratives
+      </a>
+    </div>
+  </footer>
+</article>
