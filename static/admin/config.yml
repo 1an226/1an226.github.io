@@ -1,30 +1,19 @@
-# static/admin/config.yml - Decap CMS Configuration
-# This only controls the EDITOR INTERFACE
-
 backend:
   name: github
-  repo: 1an226/1an226.github.io  # Your repository
+  repo: 1an226/1an226.github.io
   branch: main
+  auth_type: implicit
+  site_domain: "1an226.github.io"
 
-media_folder: "assets/images/uploads"  # Where uploaded images go
+media_folder: "assets/images/uploads"
 public_folder: "/assets/images/uploads"
 
 collections:
-  # Collection for your existing genre descriptions
-  - name: "genres"
-    label: "Genre Descriptions"
-    folder: "_genres"
-    create: false  # Don't create new genres via CMS
-    fields:
-      - {label: "Name", name: "name", widget: "string"}
-      - {label: "Description", name: "description", widget: "text"}
-      - {label: "Body Content", name: "body", widget: "markdown"}
-
-  # NEW: Collection for creating narrative posts
+  # Remove genres collection - Paul shouldn't edit genre descriptions
   - name: "posts"
     label: "Blog Posts"
     folder: "_posts"
-    create: true  # Allow creating new posts
+    create: true
     slug: "{{year}}-{{month}}-{{day}}-{{slug}}"
     fields:
       - {label: "Title", name: "title", widget: "string"}
