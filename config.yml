@@ -1,0 +1,44 @@
+# _config.yml - Main Jekyll Configuration
+# Place this file in your repository ROOT (same level as _genres folder)
+
+title: "Paul Kiama - Creative Freelancer"
+description: "Portfolio showcasing work across multiple genres"
+baseurl: "" # Leave blank if hosting at username.github.io
+url: "https://1an226.github.io" # Your actual GitHub Pages URL
+
+# Collections define your content types
+collections:
+  genres:
+    output: true # Creates individual pages for each genre
+    permalink: /:collection/:path/ # URLs like /genres/cyberpunk/
+  
+  posts:
+    output: true # Creates individual pages for each post
+    permalink: /posts/:title/ # URLs like /posts/my-post-title/
+
+# Default values for your content types
+defaults:
+  # Settings for files in the _genres folder
+  - scope:
+      path: "_genres"
+      type: "genres"
+    values:
+      layout: "genre"
+  
+  # Settings for files in the _posts folder (we'll create this)
+  - scope:
+      path: "_posts"
+      type: "posts"
+    values:
+      layout: "post"
+  
+  # Settings for project files
+  - scope:
+      path: "projects"
+    values:
+      layout: "project"
+
+# Build settings
+markdown: kramdown
+theme: null # We're using custom layouts, not a theme
+plugins: []
