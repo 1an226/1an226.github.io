@@ -1,5 +1,45 @@
 ---
 layout: default
 ---
-<h1>{{ page.name }}</h1>
-<p>{{ page.description }}</p>
+
+<article class="genre-page">
+  <!-- Existing Genre Description (UNCHANGED) -->
+  <header class="genre-header">
+    <h1>{{ page.name }}</h1>
+    <p class="genre-description">{{ page.description }}</p>
+  </header>
+
+  <!-- NEW: Chronological Posts Section -->
+  <section class="genre-posts">
+    <h2>Latest Narratives</h2>
+    
+    {% comment %}
+      This magic line:
+      1. Gets all posts from _posts collection
+      2. Filters to only show posts with matching genre
+      3. Sorts by date (newest first)
+    {% endcomment %}
+    {% assign genre_posts = site.posts | where: "genre", page.name %}
+    
+    {% if genre_posts.size > 0 %}
+      <div class="posts-list">
+        {% for post in genre_posts %}
+          <article class="post-item">
+            <h3 class="post-title">
+              <a href="{{ post.url | relative_url }}">{{ post.title }}</a>
+            </h3>
+            <time class="post-date" datetime="{{ post.date | date_to_xmlschema }}">
+              {{ post.date | date: "%B %d, %Y" }}
+            </time>
+            <div class="post-excerpt">
+              {{ post.excerpt | default: post.content | strip_html | truncatewords: 50 }}
+            </div>
+            <a href="{{ post.url | relative_url }}" class="read-more">Read more →</a>
+          </article>
+        {% endfor %}
+      </div>
+    {% else %}
+      <p class="no-posts">No narratives yet. Check back soon!</p>
+    {% endif %}
+  </section>
+</article>
