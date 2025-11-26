@@ -1,18 +1,4 @@
-<!DOCTYPE html>
-<html>
-<head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Paul's Blog CMS</title>
-  
-  <!-- Try multiple CDNs -->
-  <script src="https://cdn.jsdelivr.net/npm/decap-cms@^3.0.0/dist/decap-cms.js"></script>
-</head>
-<body>
-  <div id="status">Loading CMS... If this message stays, the CMS script is blocked.</div>
-  
-  <script>
-    setTimeout(function() {
+setTimeout(function() {
       if (typeof DecapCMS === 'undefined') {
         document.getElementById('status').innerHTML = 
           'CMS script blocked. Trying self-hosted version...';
