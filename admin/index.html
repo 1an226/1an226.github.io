@@ -8,7 +8,38 @@
 </head>
 <body>
   <script>
-    DecapCMS.init();
+    // Direct configuration - no external config file needed
+    DecapCMS.init({
+      config: {
+        backend: {
+          name: "github",
+          repo: "1an226/1an226.github.io",
+          branch: "main",
+          auth_type: "implicit",
+          site_domain: "1an226.github.io"
+        },
+        locale: 'en',
+        media_folder: "assets/images/uploads",
+        public_folder: "/assets/images/uploads",
+        collections: [
+          {
+            name: "posts",
+            label: "Blog Posts",
+            folder: "_posts",
+            create: true,
+            slug: "{{year}}-{{month}}-{{day}}-{{slug}}",
+            fields: [
+              {label: "Title", name: "title", widget: "string"},
+              {label: "Genre", name: "genre", widget: "select", 
+               options: ["cyberpunk", "horror", "modern-warfare", "philosophy", "politics", "talk-of-town"]},
+              {label: "Publish Date", name: "date", widget: "datetime"},
+              {label: "Featured Image", name: "image", widget: "image", required: false},
+              {label: "Content", name: "body", widget: "markdown"}
+            ]
+          }
+        ]
+      }
+    });
   </script>
 </body>
 </html>
