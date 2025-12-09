@@ -4,67 +4,86 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Paul's Blog CMS</title>
-  
-  <!-- Use self-hosted Decap CMS -->
-  <script src="/assets/js/decap-cms.js"></script>
 </head>
 <body>
   <div id="status" style="padding: 20px; font-family: Arial;">
     Loading Paul's Blog CMS...
   </div>
-  
+
   <script>
-    function initializeCMS() {
-      if (typeof DecapCMS !== 'undefined') {
-        try {
-          DecapCMS.init({
-            config: {
-              backend: {
-                name: "github",
-                repo: "1an226/1an226.github.io",
-                branch: "main",
-                auth_type: "implicit",
-                site_domain: "1an226.github.io"
-              },
-              media_folder: "assets/images/uploads",
-              public_folder: "/assets/images/uploads",
-              collections: [
-                {
-                  name: "posts",
-                  label: "Blog Posts",
-                  folder: "_posts",
-                  create: true,
-                  slug: "{{year}}-{{month}}-{{day}}-{{slug}}",
-                  fields: [
-                    {label: "Title", name: "title", widget: "string"},
-                    {label: "Genre", name: "genre", widget: "select", 
-                     options: ["cyberpunk", "horror", "modern-warfare", "philosophy", "politics", "talk-of-town"]},
-                    {label: "Publish Date", name: "date", widget: "datetime"},
-                    {label: "Featured Image", name: "image", widget: "image", required: false},
-                    {label: "Content", name: "body", widget: "markdown"}
-                  ]
-                }
-              ]
-            }
-          });
-          document.getElementById('status').style.display = 'none';
-        } catch (error) {
+    function loadCMS() {
+      const script = document.createElement('script');
+      
+      // Try multiple CDN sources
+      const cdns = [
+        'https://cdn.jsdelivr.net/npm/decap-cms@^3.0.0/dist/decap-cms.js',
+        'https://unpkg.com/decap-cms@^3.0.0/dist/decap-cms.js',
+        '/assets/js/decap-cms.js'  // Self-hosted fallback
+      ];
+      
+      let currentCDN = 0;
+      
+      function tryNextCDN() {
+        if (currentCDN >= cdns.length) {
           document.getElementById('status').innerHTML = 
-            'Configuration Error: ' + error.message;
+            'All CMS sources failed. Please check internet connection or upload the CMS file manually.';
+          return;
         }
-      } else {
-        document.getElementById('status').innerHTML = 
-          'Error: CMS script failed to load even from self-hosted version. ' +
-          'Please check the file path: /assets/js/decap-cms.js';
+        
+        script.src = cdns[currentCDN];
+        script.onload = function() {
+          document.getElementById('status').innerHTML = 'CMS loaded! Initializing...';
+          initializeCMS();
+        };
+        script.onerror = function() {
+          currentCDN++;
+          document.getElementById('status').innerHTML = 
+            'Trying alternative source ' + currentCDN + ' of ' + cdns.length + '...';
+          setTimeout(tryNextCDN, 1000);
+        };
+        
+        document.head.appendChild(script);
       }
+      
+      tryNextCDN();
     }
     
-    // Wait for script to load
-    if (document.readyState === 'loading') {
-      document.addEventListener('DOMContentLoaded', initializeCMS);
-    } else {
-      initializeCMS();
+    function initializeCMS() {
+      DecapCMS.init({
+        config: {
+          backend: {
+            name: "github",
+            repo: "1an226/1an226.github.io",
+            branch: "main",
+            auth_type: "implicit",
+            site_domain: "1an226.github.io"
+          },
+          media_folder: "assets/images/uploads",
+          public_folder: "/assets/images/uploads",
+          collections: [
+            {
+              name: "posts",
+              label: "Blog Posts",
+              folder: "_posts",
+              create: true,
+              slug: "{{year}}-{{month}}-{{day}}-{{slug}}",
+              fields: [
+                {label: "Title", name: "title", widget: "string"},
+                {label: "Genre", name: "genre", widget: "select", 
+                 options: ["cyberpunk", "horror", "modern-warfare", "philosophy", "politics", "talk-of-town"]},
+                {label: "Publish Date", name: "date", widget: "datetime"},
+                {label: "Featured Image", name: "image", widget: "image", required: false},
+                {label: "Content", name: "body", widget: "markdown"}
+              ]
+            }
+          ]
+        }
+      });
+      document.getElementById('status').style.display = 'none';
     }
+    
+    // Start loading process
+    loadCMS();
   </script>
 </body>
 </html>
